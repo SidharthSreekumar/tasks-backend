@@ -4,8 +4,8 @@
   "description": "NodeJS back-end for tasks app",
   "main": "app.js",
   "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon src/app.ts",
     "lint": "eslint . --ext .ts",
     "format": "prettier --config .prettierrc \"src/**/*{.ts,.js,.json,.css,.scss}\" --write"
   },
@@ -20,17 +20,31 @@
   },
   "homepage": "https://github.com/SidharthSreekumar/tasks-backend#readme",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/config": "^0.0.40",
     "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.6",
+    "@types/lodash": "^4.14.178",
+    "@types/nanoid": "^3.0.0",
     "@types/node": "^16.11.10",
+    "@types/pino": "^7.0.5",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "nodemon": "^2.0.15",
+    "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.6",
+    "dayjs": "^1.10.7",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.1.2",
+    "nanoid": "^3.1.30",
+    "pino": "^7.5.1"
   }
 }
