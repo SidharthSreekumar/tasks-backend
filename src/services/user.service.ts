@@ -18,7 +18,7 @@ export async function findUser(
 ) {
   try {
     const user = await User.findOne(query, {}, options);
-    return omit(user, ['password', '_id', '__v']);
+    return omit(user, ['password', '__v']);
   } catch (error: any) {
     log.error(error.message);
     throw error;
@@ -39,11 +39,26 @@ export async function findAndUpdateUser(
   }
 }
 
-export async function findAndDeleteUser(query:FilterQuery<UserDocument>) {
+export async function findAndDeleteUser(query: FilterQuery<UserDocument>) {
   try {
     return User.deleteOne(query);
   } catch (error: any) {
     log.error(error.message);
     throw error;
+  }
+}
+
+export async function validatePassword({ email, password }: { email: string; password: string }) {
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return false;
+    }
+    log.info(user)
+    const isValid: boolean = await user.comparePassword(password);
+    if (!isValid) return false;
+    return omit(user.toJSON(), 'password');
+  } catch (error) {
+    throw new Error("User search failed");
   }
 }

@@ -19,7 +19,7 @@ export async function getUserHandler(req: Request, res: Response) {
   const username: string = req.params.username;
   try {
     const user = await findUser({ username });
-    res.send(user);
+    res.send(omit(user, "_id"));
   } catch (error: any) {
     log.error(error);
     res.sendStatus(404);
