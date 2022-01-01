@@ -2,6 +2,7 @@ import express from 'express';
 import deserializeUser from './middlewares/deserializeUser';
 import routes from './routes/routes';
 import sessionRoutes from './routes/session.routes';
+import taskRoutes from './routes/task.routes';
 import userRoutes from './routes/user.routes';
 import connect from './utils/connect';
 import log from './utils/logger';
@@ -22,5 +23,6 @@ app.listen(port, async () => {
   routes(app);
   userRoutes(app);
   sessionRoutes(app);
+  taskRoutes(app);
   swaggerDocs(app, port);
 });

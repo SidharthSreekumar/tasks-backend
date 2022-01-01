@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 
+// One interface for input types and other for replicating the schema
 export interface UserInput {
   username: string;
   email: string;
