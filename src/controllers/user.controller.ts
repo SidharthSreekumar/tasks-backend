@@ -4,6 +4,12 @@ import User, { UserInput } from '../models/user.model';
 import { findAndDeleteUser, findAndUpdateUser, findUser } from '../services/user.service';
 import log from '../utils/logger';
 
+/**
+ * Create user handler
+ *
+ * @param req Request Object
+ * @param res Response Object
+ */
 export async function createUserHandler(req: Request, res: Response) {
   const body = req.body as UserInput;
   try {
@@ -15,6 +21,12 @@ export async function createUserHandler(req: Request, res: Response) {
   }
 }
 
+/**
+ * Get user by username handler
+ *
+ * @param req Request Object
+ * @param res Response Object
+ */
 export async function getUserHandler(req: Request, res: Response) {
   const username: string = req.params.username;
   try {
@@ -26,6 +38,12 @@ export async function getUserHandler(req: Request, res: Response) {
   }
 }
 
+/**
+ * Update user by username handler
+ *
+ * @param req Request Object
+ * @param res Response Object
+ */
 export async function updateUserHandler(req: Request, res: Response) {
   const username: string = req.params.username;
   const update = req.body;
@@ -40,6 +58,12 @@ export async function updateUserHandler(req: Request, res: Response) {
   return res.send(userUpdated);
 }
 
+/**
+ * Delete user by username handler
+ *
+ * @param req Request Object
+ * @param res Response Object
+ */
 export async function deleteUserHandler(req: Request, res: Response) {
   const username: string = req.params.username;
   const user = await findUser({ username });

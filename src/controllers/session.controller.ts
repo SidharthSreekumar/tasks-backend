@@ -8,6 +8,13 @@ import {
 import { validatePassword } from '../services/user.service';
 import { signJwt } from '../utils/jwt';
 
+/**
+ * Create user session handler
+ *
+ * @param req Request Object
+ * @param res Response Object
+ * @returns Response
+ */
 export async function createUserSessionHandler(req: Request, res: Response) {
   const user: any = await validatePassword(req.body);
   if (!user) {
@@ -32,12 +39,26 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   return res.send({ accessToken, refreshToken });
 }
 
+/**
+ * Get user session handler
+ *
+ * @param req Request Object
+ * @param res Response Object
+ * @returns Response
+ */
 export async function getUserSessionHandler(req: Request, res: Response) {
   const userId = res.locals.user._id;
   const sessions = await findSessions({ user: userId, valid: true });
   return res.send(sessions);
 }
 
+/**
+ * Delete user session handler
+ *
+ * @param req Request Object
+ * @param res Response Object
+ * @returns Response
+ */
 export async function deleteSessionHandler(req: Request, res: Response) {
   const sessionId = res.locals.user.session;
 
@@ -49,6 +70,13 @@ export async function deleteSessionHandler(req: Request, res: Response) {
   });
 }
 
+/**
+ * Delete all user sessions handler
+ *
+ * @param req Request Object
+ * @param res Response Object
+ * @returns Response
+ */
 export async function deleteAllSessionsHandler(req: Request, res: Response) {
   const user = res.locals.user._id;
   await updateManySessions({ user }, { valid: false });

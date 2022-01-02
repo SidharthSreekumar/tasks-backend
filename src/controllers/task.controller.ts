@@ -9,6 +9,13 @@ import {
   updateTaskById
 } from '../services/task.service';
 
+/**
+ * Create user task handler
+ * 
+ * @param req Request Object with body of type CreateTaskInput
+ * @param res Response Object
+ * @returns Response
+ */
 export async function createTaskHandler(
   req: Request<never, never, CreateTaskInput['body']>,
   res: Response
@@ -23,6 +30,13 @@ export async function createTaskHandler(
   }
 }
 
+/**
+ * Get all user tasks handler
+ * 
+ * @param req Request Object
+ * @param res Response Object
+ * @returns Response
+ */
 export async function getTasksHandler(req: Request, res: Response) {
   const userId = res.locals.user._id;
   try {
@@ -33,6 +47,13 @@ export async function getTasksHandler(req: Request, res: Response) {
   }
 }
 
+/**
+ * Update user task by id handler
+ * 
+ * @param req Request Object with params of type UpdateTaskInput
+ * @param res Response Object
+ * @returns Response
+ */
 export async function updateTaskHandler(req: Request<UpdateTaskInput['params']>, res: Response) {
   const userId = res.locals.user._id;
   const taskId = req.params.taskId;
@@ -48,6 +69,13 @@ export async function updateTaskHandler(req: Request<UpdateTaskInput['params']>,
   }
 }
 
+/**
+ * Delete user task by id handler
+ * 
+ * @param req Request Object with params of type UpdateTaskInput
+ * @param res Response Object
+ * @returns Response
+ */
 export async function deleteTaskHandler(req: Request<UpdateTaskInput['params']>, res: Response) {
   const userId = res.locals.user._id;
   const taskId = req.params.taskId;
