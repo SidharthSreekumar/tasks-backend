@@ -1,6 +1,13 @@
 import { Request, Response } from 'express';
-import { CreateTaskInput } from '../schema/task.schema';
-import { createTask, getTasks } from '../services/task.service';
+import { omit } from 'lodash';
+import { CreateTaskInput, UpdateTaskInput } from '../schema/task.schema';
+import {
+  createTask,
+  deleteTaskById,
+  findTaskById,
+  getTasks,
+  updateTaskById
+} from '../services/task.service';
 
 export async function createTaskHandler(
   req: Request<never, never, CreateTaskInput['body']>,
@@ -22,6 +29,35 @@ export async function getTasksHandler(req: Request, res: Response) {
     const tasks = await getTasks(userId);
     res.send(tasks);
   } catch (error) {
-    res.status(404).send('Fetch tasks operation failed.')
+    res.status(404).send('Fetch tasks operation failed.');
+  }
+}
+
+export async function updateTaskHandler(req: Request<UpdateTaskInput['params']>, res: Response) {
+  const userId = res.locals.user._id;
+  const taskId = req.params.taskId;
+  const body = req.body;
+  try {
+    const task = await findTaskById(taskId);
+    if (!task) return res.sendStatus(404);
+    if (String(task?.user) !== userId) return res.sendStatus(403);
+    const result = await updateTaskById({ taskId }, body);
+    res.send(omit(result, ['__v', 'user']));
+  } catch (error: any) {
+    res.status(400).send(error.message);
+  }
+}
+
+export async function deleteTaskHandler(req: Request<UpdateTaskInput['params']>, res: Response) {
+  const userId = res.locals.user._id;
+  const taskId = req.params.taskId;
+  try {
+    const task = await findTaskById(taskId);
+    if (!task) return res.sendStatus(404);
+    if (String(task?.user) !== userId) return res.sendStatus(403);
+    await deleteTaskById({ taskId });
+    res.sendStatus(200);
+  } catch (error: any) {
+    res.status(400).send(error.message);
   }
 }
