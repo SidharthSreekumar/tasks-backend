@@ -33,6 +33,12 @@ export async function getTasks(userId: UserDocument['_id']) {
   }
 }
 
+/**
+ * `findTaskById` returns a task document by its id.
+ * @param taskId - The taskId of the task to find.
+ * @param {QueryOptions} options - QueryOptions
+ * @returns The task document.
+ */
 export async function findTaskById(
   taskId: TaskDocument['_id'],
   options: QueryOptions = { lean: true }
@@ -44,6 +50,13 @@ export async function findTaskById(
   }
 }
 
+/**
+ * Update a task by id.
+ * @param query - FilterQuery<TaskDocument>
+ * @param update - UpdateQuery<TaskDocument>
+ * @param {QueryOptions} options - QueryOptions
+ * @returns The updated document.
+ */
 export async function updateTaskById(
   query: FilterQuery<TaskDocument>,
   update: UpdateQuery<TaskDocument>,
@@ -59,6 +72,11 @@ export async function updateTaskById(
   }
 }
 
+/**
+ * `deleteTaskById` is a function that deletes a task from the database.
+ * @param query - FilterQuery<TaskDocument>
+ * @returns The number of documents deleted.
+ */
 export async function deleteTaskById(query: FilterQuery<TaskDocument>) {
   try {
     return Task.deleteOne(query)
